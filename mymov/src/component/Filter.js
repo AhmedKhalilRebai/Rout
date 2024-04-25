@@ -1,10 +1,19 @@
-// Filter.js
-import React from 'react';
+import React, { useState } from 'react';
+import MovieList from './MovieList.js';
+import movies from './Data.js';
 
-const Filter = ({ filter, setFilter }) => {
-    const handleChange = (e) => {
+const Filter = () => {
+    const [filter, setFilter] = useState('');
+    
+    const handleFilterChange = (e) => {
         setFilter(e.target.value);
     };
+    
+    const filteredMovies = movies.filter(
+        (movie) =>
+        movie.title.toLowerCase().includes(filter.toLowerCase()) ||
+        movie.rating.toString().includes(filter)
+    );
 
     return (
         <div className="filter">
@@ -12,8 +21,9 @@ const Filter = ({ filter, setFilter }) => {
                 type="text"
                 placeholder="Search by title or rating"
                 value={filter}
-                onChange={handleChange}
+                onChange={handleFilterChange}
             />
+            <MovieList movies={filteredMovies}/>
         </div>
     );
 };

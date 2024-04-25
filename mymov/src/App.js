@@ -1,26 +1,22 @@
-// App.js
-import React, { useState } from 'react';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import MovieList from './component/MovieList';
+import MovieDescription from './component/MovieDescription';
 import Filter from './component/Filter';
-import Movies from './component/Data';
 
-const App = () => {
-    const [filter, setFilter] = useState('');
-    const filteredMovies = Movies.filter(
-        (movie) =>
-            movie.title.toLowerCase().includes(filter.toLowerCase()) ||
-            movie.rating.toString().includes(filter)
-    );
-
-    return (
-        <div className="app">
-          <div className='header'>
-            <h1>My Movie App</h1>
-            <Filter filter={filter} setFilter={setFilter} />
-            </div>
-            <MovieList movies={filteredMovies} />
-        </div>
-    );
+const App = () => { 
+  return (  
+    <Router>
+      <div className="app">
+        <h1>My Movie List</h1>
+        <Routes>
+          <Route path="/" element={<Filter />} />
+          <Route path="/movies" element={<MovieList/>} />
+          <Route path="/movies/:title" element={<MovieDescription />} />
+        </Routes>
+      </div>
+    </Router>
+  );
 };
 
 export default App;
